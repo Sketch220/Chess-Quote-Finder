@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grandmaster Chess Quotes Finder</title>
+    <title>CHESS QUOTES Finder</title>
     <!-- Google Fonts - Inter for a professional look -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -44,7 +44,7 @@
             overflow: hidden; /* Hides text outside the animated width */
             border-right: 3px solid #3182ce; /* Cursor effect */
             white-space: nowrap; /* Keeps text on one line for animation */
-            animation: typing 4s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+            animation: typing 2s steps(12, end) forwards, blink-caret 0.75s step-end infinite; /* Adjusted duration and steps for "CHESS QUOTES" */
             max-width: 100%; /* Ensures it doesn't overflow its container */
             box-sizing: border-box; /* Include padding/border in width calculation */
         }
@@ -75,25 +75,23 @@
             -webkit-backdrop-filter: blur(8px); /* Safari support */
         }
 
-        /* Section Heading */
-        h2 {
+        /* Section Heading (h2 and h3 styles) */
+        h2, h3 { /* Apply common styles to both h2 and h3 */
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 1.5rem; /* Adjusted margin */
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2.2rem; /* Default for h2, will be overridden for h3 */
             font-weight: 700;
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
         }
 
-        /* Paragraph below heading */
-        main p {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #4a5568;
-            font-size: 1.05rem;
-            line-height: 1.6;
+        h3 { /* Specific styles for h3 */
+            font-size: 1.8rem; /* Smaller font size for h3 */
+            font-weight: 600; /* Slightly less bold for h3 */
         }
+
 
         /* Select Dropdown Styling */
         select {
@@ -201,7 +199,7 @@
                 margin: 2rem auto;
             }
 
-            h2 {
+            h2, h3 { /* Apply responsive font size to both h2 and h3 */
                 font-size: 1.8rem;
             }
 
@@ -229,6 +227,7 @@
         @media (max-width: 480px) {
             header h1 {
                 font-size: 1.5rem;
+                letter-spacing: 1px; /* Adjust letter spacing for smaller screens */
             }
 
             main {
@@ -236,7 +235,7 @@
                 margin: 1rem auto;
             }
 
-            h2 {
+            h2, h3 { /* Apply responsive font size to both h2 and h3 */
                 font-size: 1.5rem;
             }
         }
@@ -244,15 +243,14 @@
 </head>
 <body>
     <header>
-        <h1 class="typing-effect">Grandmaster Chess<br>Quotes Finder</h1>
+        <h1 class="typing-effect">CHESS QUOTES</h1>
     </header>
 
     <main>
         <section id="quote-finder">
-            <h2>Explore Wisdom from Chess Grandmasters</h2>
-            <p>Select a Grandmaster from the dropdown below to explore their profound insights and famous sayings about chess.</p>
+            <h3>Explore Wisdom Of Chess Legends From The Dropdown Below</h3>
             <select id="grandmaster-select">
-                <option value="">-- Select a Grandmaster --</option>
+                <option value="">-- Select --</option>
                 <!-- Options will be populated by JavaScript -->
             </select>
             <div id="quotes-display">
@@ -263,7 +261,7 @@
 
     <footer>
         <p>&copy; All rights reserved 2025-2026</p>
-        <p>Designed and developed by <strong>Ranjit Tripathy</strong></p>
+        <p>Designed & Developed By <strong>Ranjit Tripathy</strong></p>
     </footer>
 
     <script>
@@ -271,7 +269,7 @@
             const grandmasterSelect = document.getElementById('grandmaster-select');
             const quotesDisplay = document.getElementById('quotes-display');
 
-            // Grandmaster Quotes Data (Expanded to 25+ GMs with 5-6+ quotes each)
+            // Grandmaster Quotes Data (Expanded to 27 GMs with 5-6+ quotes each)
             const grandmasterQuotes = {
                 "Bobby Fischer": [
                     "Chess is war over the board. The object is to crush the opponent's mind.",
