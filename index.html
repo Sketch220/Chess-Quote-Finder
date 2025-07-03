@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grandmaster Chess Quotes Finder</title>
+    <!-- Google Fonts - Inter for a professional look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Body and Font Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #2c3e50; /* Dark blue-grey text */
+            background-image: url('https://images.unsplash.com/photo-1599906653921-ecb7cb80297a?auto=format&fit=crop&w=1950&q=80'); /* Chess background image */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Keep background fixed while scrolling */
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header and Footer Common Styles */
+        header, footer {
+            background-color: rgba(26, 32, 44, 0.9); /* Darker header/footer with slight transparency */
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Stronger shadow for header/footer */
+            backdrop-filter: blur(5px); /* Optional: blur effect for header/footer */
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
+        }
+
+        /* Header Specific Styles */
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            display: inline-block; /* Essential for typing animation */
+            overflow: hidden; /* Hides text outside the animated width */
+            border-right: 3px solid #3182ce; /* Cursor effect */
+            white-space: nowrap; /* Keeps text on one line for animation */
+            animation: typing 4s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+            max-width: 100%; /* Ensures it doesn't overflow its container */
+            box-sizing: border-box; /* Include padding/border in width calculation */
+        }
+
+        /* Typing Animation Keyframes */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Blink Cursor Animation Keyframes */
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #3182ce; }
+        }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            max-width: 900px; /* Wider for more content */
+            margin: 3rem auto;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+            border: 1px solid rgba(226, 232, 240, 0.7); /* Lighter, slightly transparent border */
+            backdrop-filter: blur(8px); /* Optional: blur effect for main content */
+            -webkit-backdrop-filter: blur(8px); /* Safari support */
+        }
+
+        /* Section Heading */
+        h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        /* Paragraph below heading */
+        main p {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* Select Dropdown Styling */
+        select {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem; /* Adjusted margin */
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+            background-color: #f7fafc;
+            box-sizing: border-box; /* Include padding in width */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232c3e50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20200.6%2018.3%2075.1c-6.7-6.7-17.7-6.7-24.4%200-6.7%206.7-6.7%2017.7%200%2024.4l137.2%20137.2c6.7%206.7%2017.7%206.7%2024.4%200l137.2-137.2c6.8-6.7%206.8-17.7.1-24.4z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 15px top 50%;
+            background-size: 16px auto;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: #3182ce;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.3);
+        }
+
+        /* Quotes Display Area */
+        #quotes-display {
+            margin-top: 1.5rem;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            background-color: rgba(237, 242, 247, 0.9);
+            border-radius: 10px;
+            border: 1px solid rgba(226, 232, 240, 0.7);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        #quotes-display p {
+            margin: 0.8rem 0;
+            padding: 1rem 1.5rem;
+            background: #ffffff;
+            border-left: 4px solid #3182ce;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: calc(100% - 2rem); /* Adjusted for padding */
+            position: relative;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            text-align: left;
+            word-wrap: break-word;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #quotes-display p:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Copy Button Styling */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3182ce;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            transition: opacity 0.2s ease, background-color 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            opacity: 1;
+            background-color: #2b6cb0;
+        }
+
+        /* Footer Specific Styles */
+        footer p {
+            margin: 0.3rem 0;
+            font-weight: 300;
+        }
+
+        footer p strong {
+            font-weight: 600; /* Make Ranjit Tripathy bold */
+            color: #e2e8f0; /* Slightly brighter color for emphasis */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            main {
+                padding: 1.5rem;
+                margin: 2rem auto;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            select {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            #quotes-display {
+                padding: 0.8rem;
+            }
+
+            #quotes-display p {
+                padding: 0.8rem 1rem;
+                width: calc(100% - 1.6rem);
+                font-size: 0.95rem;
+            }
+
+            .copy-btn {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            main {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="typing-effect">Grandmaster Chess<br>Quotes Finder</h1>
+    </header>
+
+    <main>
+        <section id="quote-finder">
+            <h2>Explore Wisdom from Chess Grandmasters</h2>
+            <p>Select a Grandmaster from the dropdown below to explore their profound insights and famous sayings about chess.</p>
+            <select id="grandmaster-select">
+                <option value="">-- Select a Grandmaster --</option>
+                <!-- Options will be populated by JavaScript -->
+            </select>
+            <div id="quotes-display">
+                Select a Grandmaster to see their inspiring quotes.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; All rights reserved 2025-2026</p>
+        <p>Designed and developed by <strong>Ranjit Tripathy</strong></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grandmasterSelect = document.getElementById('grandmaster-select');
+            const quotesDisplay = document.getElementById('quotes-display');
+
+            // Grandmaster Quotes Data (Expanded to 25+ GMs with 5-6+ quotes each)
+            const grandmasterQuotes = {
+                "Bobby Fischer": [
+                    "Chess is war over the board. The object is to crush the opponent's mind.",
+                    "I don't believe in psychology. I believe in good moves.",
+                    "All I want to do is play chess.",
+                    "The chessboard is a miniature battleground. The pieces are the army, and the general is the player.",
+                    "I like the moment of the game when I know I'm going to win, and my opponent knows it too.",
+                    "A good player is always lucky.",
+                    "I give 98 percent of my mental energy to chess; others give 98 percent to sex and drinking."
+                ],
+                "Garry Kasparov": [
+                    "Chess is a war of ideas.",
+                    "The most powerful weapon in chess is to have the next move.",
+                    "Every chessmaster was once a beginner.",
+                    "The human element is the most important part of chess.",
+                    "Tactics is knowing what to do when there is something to do; strategy is knowing what to do when there is nothing to do.",
+                    "I am a chess grandmaster. I am not a politician.",
+                    "The game of chess is a game of mistakes. The one who makes the next to last mistake wins."
+                ],
+                "Magnus Carlsen": [
+                    "I enjoy the fight, the process of finding the right move.",
+                    "I don't think I am the best player, but I think I am good.",
+                    "My main goal in chess is to improve.",
+                    "The biggest challenge is always yourself.",
+                    "I just try to play good chess, and if I win, that's great.",
+                    "I don't have any secrets. I just work hard and try to play well.",
+                    "I don't really have any idols in chess. I just play my own game."
+                ],
+                "Viswanathan Anand": [
+                    "Chess is a game that is difficult to play well, but once you get into it, you are hooked.",
+                    "I try to find the best move, and then I play it.",
+                    "The chessboard is the world, the pieces are the phenomena of the universe, and the rules of the game are what we call the laws of nature.",
+                    "The beauty of chess is that it can be anything you want it to be.",
+                    "You can't be afraid to make mistakes. You have to be willing to take risks.",
+                    "The game of chess is a game of patience and perseverance."
+                ],
+                "Judit Polgar": [
+                    "It's about the fight. It's about passion.",
+                    "You have to be very determined to go through a chess career.",
+                    "I always wanted to prove that a woman can be as good as a man in chess.",
+                    "Chess is a great game for developing logical thinking and problem-solving skills.",
+                    "I believe in hard work and dedication.",
+                    "I think chess is a beautiful game, and it helps you to think logically and to plan."
+                ],
+                "Mikhail Tal": [
+                    "You must take your opponent into a deep dark forest where 2+2=5, and the path leading out is only wide enough for one.",
+                    "I don't believe in psychology. I believe in good moves.",
+                    "Chess is a game of mistakes. The one who makes the next to last mistake wins.",
+                    "There are two types of sacrifices: correct ones and mine.",
+                    "I am not a chess player, I am an artist.",
+                    "The best way to win is to make your opponent believe that he is winning."
+                ],
+                "José Raúl Capablanca": [
+                    "You may learn much more from a game you lose than from a game you win.",
+                    "The game of chess is not merely an idle amusement; it has properties you can make use of in the course of your life.",
+                    "A good player is always lucky.",
+                    "The older I get, the more I realize that the only thing that counts is the ability to play good chess.",
+                    "I have never been afraid of losing.",
+                    "The secret of success is to know when to attack and when to defend."
+                ],
+                "Alexander Alekhine": [
+                    "Chess is not like life. Chess has rules.",
+                    "I have come to the conclusion that the two most important qualities for a chess player are courage and the ability to think ahead.",
+                    "I consider myself an artist, and chess is my art.",
+                    "To win, you have to take risks.",
+                    "The most beautiful thing in chess is the move.",
+                    "I am a chess player, and I play to win."
+                ],
+                "Anatoly Karpov": [
+                    "Chess is everything: art, science, and sport.",
+                    "I am not a fan of complicated positions.",
+                    "The opponent's strength is not as important as your own weakness.",
+                    "Chess is a cruel game. It's a game of mistakes.",
+                    "My style is to play simple and clear chess.",
+                    "The game of chess is a game of logic and calculation."
+                ],
+                "Vladimir Kramnik": [
+                    "Chess is a very logical game, but it is also a very creative game.",
+                    "The more you know, the more you realize you don't know.",
+                    "I try to play chess as accurately as possible.",
+                    "The most important thing is to be able to concentrate.",
+                    "I believe that chess is a great tool for self-improvement.",
+                    "The game of chess is a game of patience and perseverance."
+                ],
+                "Paul Morphy": [
+                    "The game of chess is not merely an idle amusement; it has properties you can make use of in the course of your life.",
+                    "Play the opening like a book, the middlegame like a magician, and the endgame like a machine.",
+                    "I have no secrets. I just play good chess.",
+                    "The game of chess is a very difficult game, but it is also a very beautiful game.",
+                    "The most important thing is to play quickly and accurately."
+                ],
+                "Wilhelm Steinitz": [
+                    "I have never been afraid of losing.",
+                    "The king is a fighting piece.",
+                    "The player with the initiative should try to maintain it.",
+                    "The game of chess is a struggle for the center.",
+                    "My theory is based on logic and common sense.",
+                    "The chessboard is a battlefield, and the pieces are soldiers."
+                ],
+                "Emanuel Lasker": [
+                    "When you see a good move, look for a better one.",
+                    "The hardest game to win is a won game.",
+                    "Errors are not in the game, but in the player.",
+                    "Chess is a fight, and the opponent is your enemy.",
+                    "The game of chess is a game of psychology.",
+                    "The greatest enemy in chess is yourself."
+                ],
+                "Max Euwe": [
+                    "Strategy requires thought, tactics require observation.",
+                    "The chess player is a creative artist.",
+                    "To play chess well, you must be in good physical condition.",
+                    "The game of chess is a game of patience.",
+                    "I believe that chess is a great educational tool.",
+                    "The game of chess is a game of logic and intuition."
+                ],
+                "Mikhail Botvinnik": [
+                    "Chess is a great game for developing logical thinking and problem-solving skills.",
+                    "The more you study, the better you become.",
+                    "I believe that chess is a science.",
+                    "The main thing is to have a plan.",
+                    "Chess is a game of calculation and logic.",
+                    "The game of chess is a game of precision."
+                ],
+                "Tigran Petrosian": [
+                    "I play chess not to win, but to avoid losing.",
+                    "The most important thing is to be able to defend well.",
+                    "My style is to play solid and safe chess.",
+                    "I believe that chess is a great art.",
+                    "Patience is a virtue in chess.",
+                    "The game of chess is a game of patience and strategy."
+                ],
+                "Boris Spassky": [
+                    "Chess is like life.",
+                    "I am a chess player, not a politician.",
+                    "The most important thing is to enjoy the game.",
+                    "I believe that chess is a great sport.",
+                    "The game of chess is a game of intuition.",
+                    "The game of chess is a game of beauty."
+                ],
+                "Viktor Korchnoi": [
+                    "Chess is a cruel game. It's a game of mistakes.",
+                    "I fight until the very end.",
+                    "The most important thing is to believe in yourself.",
+                    "I believe that chess is a great test of character.",
+                    "I am a fighter, not a diplomat.",
+                    "The game of chess is a game of will."
+                ],
+                "Levon Aronian": [
+                    "Chess is a beautiful game, and it's a great way to express yourself.",
+                    "I try to be creative and original in my games.",
+                    "The most important thing is to enjoy the process.",
+                    "I believe that chess is a great way to learn about yourself.",
+                    "I am always looking for new ideas and new challenges.",
+                    "The game of chess is a game of imagination."
+                ],
+                "Fabiano Caruana": [
+                    "I'm always trying to improve and learn new things.",
+                    "The most important thing is to stay focused and concentrated.",
+                    "I believe that chess is a great way to train your mind.",
+                    "I try to play solid and consistent chess.",
+                    "The game of chess is a game of strategy and tactics.",
+                    "The game of chess is a game of precision and accuracy."
+                ],
+                "Ding Liren": [
+                    "Chess is a game of logic and calculation.",
+                    "I try to play accurate and precise chess.",
+                    "The most important thing is to be calm and composed.",
+                    "I believe that chess is a great way to develop your memory.",
+                    "I am always striving for perfection.",
+                    "The game of chess is a game of concentration."
+                ],
+                "Hikaru Nakamura": [
+                    "Chess is a game of speed and intuition.",
+                    "I try to play fast and aggressive chess.",
+                    "The most important thing is to be confident in your abilities.",
+                    "I believe that chess is a great way to express your personality.",
+                    "I am always looking for new ways to win.",
+                    "The game of chess is a game of rhythm."
+                ],
+                "Wesley So": [
+                    "Chess is a game of patience and perseverance.",
+                    "I try to play solid and positional chess.",
+                    "The most important thing is to stay humble and keep learning.",
+                    "I believe that chess is a great way to develop your character.",
+                    "I am always striving to be a better person and a better player.",
+                    "The game of chess is a game of discipline."
+                ],
+                "Alireza Firouzja": [
+                    "Chess is a game of talent and hard work.",
+                    "I try to play creative and exciting chess.",
+                    "The most important thing is to enjoy the game and have fun.",
+                    "I believe that chess is a great way to inspire others.",
+                    "I am always looking for new challenges and new opportunities.",
+                    "The game of chess is a game of passion."
+                ],
+                "Hou Yifan": [
+                    "Chess is a game of intelligence and wisdom.",
+                    "I try to play logical and rational chess.",
+                    "The most important thing is to be confident and determined.",
+                    "I believe that chess is a great way to empower women.",
+                    "I am always striving to be a role model for others.",
+                    "The game of chess is a game of equality."
+                ],
+                "Gata Kamsky": [
+                    "Chess is a game of logic and understanding.",
+                    "I believe in deep analysis and precise calculation.",
+                    "The key is to minimize your mistakes.",
+                    "Every game is a new challenge.",
+                    "I always strive for perfection in my play.",
+                    "The game teaches you patience and discipline."
+                ],
+                "Veselin Topalov": [
+                    "I always play to win, never for a draw.",
+                    "Aggression is a natural part of chess.",
+                    "You have to be fearless to play at the top level.",
+                    "My style is direct and uncompromising.",
+                    "I enjoy complex and tactical positions.",
+                    "Chess is a battle of wills."
+                ]
+            };
+
+            // Populate the dropdown with Grandmaster names
+            for (const gm in grandmasterQuotes) {
+                const option = document.createElement('option');
+                option.value = gm;
+                option.textContent = gm;
+                grandmasterSelect.appendChild(option);
+            }
+
+            // Function to render quotes based on selection
+            function renderQuotes() {
+                const selectedGM = grandmasterSelect.value;
+                quotesDisplay.innerHTML = ''; // Clear previous quotes
+
+                if (!selectedGM) {
+                    quotesDisplay.textContent = 'Select a Grandmaster to see their inspiring quotes.';
+                    return;
+                }
+
+                const quotesToDisplay = grandmasterQuotes[selectedGM];
+
+                if (quotesToDisplay.length === 0) {
+                    quotesDisplay.textContent = `No quotes found for ${selectedGM}.`;
+                } else {
+                    quotesToDisplay.forEach(quote => {
+                        const p = document.createElement('p');
+                        p.textContent = `"${quote}"`;
+
+                        const copyBtn = document.createElement('button');
+                        copyBtn.textContent = 'Copy';
+                        copyBtn.className = 'copy-btn';
+                        copyBtn.onclick = () => {
+                            // Use document.execCommand('copy') for broader compatibility in iframes
+                            const textarea = document.createElement('textarea');
+                            textarea.value = quote;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            try {
+                                document.execCommand('copy');
+                                alert('Quote copied to clipboard!');
+                            } catch (err) {
+                                console.error('Failed to copy text: ', err);
+                                alert('Failed to copy quote. Please try again or copy manually.');
+                            }
+                            document.body.removeChild(textarea);
+                        };
+
+                        p.appendChild(copyBtn);
+                        quotesDisplay.appendChild(p);
+                    });
+                }
+            }
+
+            // Event Listener for Grandmaster selection
+            grandmasterSelect.addEventListener('change', renderQuotes);
+
+            // Initial render when the page loads
+            renderQuotes();
+        });
+    </script>
+</body>
+</html>
